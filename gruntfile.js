@@ -136,6 +136,7 @@ module.exports = function(grunt) {
 				configFile: 'karma.conf.js'
 			}
 		}
+		
 	});
 
 	// Load NPM tasks 
@@ -167,4 +168,7 @@ module.exports = function(grunt) {
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+
+	// Test task.
+	grunt.registerTask('citest', ['env:test', 'mochaCITest', 'karma:unit']);
 };

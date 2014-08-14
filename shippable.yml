@@ -2,14 +2,21 @@ language: node_js
 node_js:
   - "0.10"
 env:
-  - NODE_ENV=travis
+  - XUNIT_FILE=shippable/testresults/result.xml
 services:
   - mongodb
 
 before_script:
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
   - grunt build
 script:
-  - npm test
-  - mv ./shippable/codecoverage/*/coverage.xml ./shippable/codecoverage/
+  - grunt test
+
+# Tell istanbul to generate a coverage report
+after_script:
+  - ./node_modules/.bin/istanbul cover grunt test -- -u tdd
+  - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
+
 after_success:
   - git push git@heroku.com:meancardboard.git master
