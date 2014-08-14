@@ -1,0 +1,50 @@
+<section data-ng-controller="BoardsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="board.name"></h1>
+		<div>Description: 	<pspan data-ng-bind="board.description"></span></div>
+		<div>Active: 	<input type="checkbox" data-ng-model="board.active"/></div>
+		<div>Id: 	<span data-ng-bind="board._id"></span></div>
+		<div>Last Modified: 	<span data-ng-bind="board.modified | date:'short'"></span></div>
+		<h3>Cards: {{board.cards.length}}</h3>
+
+		<ul class="card-list">
+			<li class="card" data-ng-repeat="card in board.cards">
+				<div class="card-meta">
+					<a class="btn btn-default btn-xs" data-ng-click="removeCard(card);">
+						<i class="glyphicon glyphicon-trash"></i>
+					</a>
+					<span data-ng-bind="card.textType"></span> |
+					<span data-ng-bind="card.modified | date:'short'"></span> |
+					<span data-ng-bind="card.lastModifiedByUser.displayName"></span>
+				</div>
+				
+				
+				<textarea class="card-text" ng-class="card.textType" data-ng-model="card.contents"></textarea>
+			</li>
+		</ul>
+	    <div class="cardAdder">
+	    	<a class="btn btn-primary" data-ng-click="addCard();">
+				<i class="glyphicon glyphicon-plus"></i>
+			</a>
+	    </div>
+	</div>
+	<div class="pull-right" data-ng-show="authentication.user._id == board.user._id">
+		<a class="btn btn-success" data-ng-click="update();">
+			<i class="glyphicon glyphicon-refresh"></i>
+		</a>
+		<a class="btn btn-primary" href="/#!/boards/{{board._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			Posted on
+			<span data-ng-bind="board.created | date:'mediumDate'"></span>
+			by
+			<span data-ng-bind="board.user.displayName"></span>
+		</em>
+	</small>
+</section>
