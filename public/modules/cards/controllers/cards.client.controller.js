@@ -15,7 +15,7 @@ angular.module('cards').controller('CardsController', ['$scope', '$stateParams',
 
 			// Redirect after save
 			card.$save(function(response) {
-				//$location.path('cards/' + response._id);
+				$location.path('cards/' + response._id);
 
 				// Clear form fields
 				$scope.name = '';

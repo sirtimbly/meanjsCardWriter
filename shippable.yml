@@ -6,5 +6,10 @@ env:
 services:
   - mongodb
 
+before_script:
+  - grunt build
+script:
+  - npm test
+  - mv ./shippable/codecoverage/*/coverage.xml ./shippable/codecoverage/
 after_success:
   - git push git@heroku.com:meancardboard.git master
